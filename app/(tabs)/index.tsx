@@ -1,210 +1,23 @@
-import React, { Component } from 'react';
-import { StyleSheet, Text, TextInput, View, Button, Alert, Image } from 'react-native';
-import { Picker } from '@react-native-picker/picker';
-import DateTimePicker from '@react-native-community/datetimepicker';
-import InputFiled from '@/components/InputField';
-import PasswordMeter from '@/components/PasswordMeter';
+import React, { useState } from "react";
+import { View, StyleSheet } from "react-native";
+import RegistrationForm from "./registrationForm";
+import SuccessPage from "./successPage";
 
-//import SuccessPage from "./successPage";
+export default function Index() {
+  const [userInfo, setUserInfo] = useState<string | null>(null);  // State to hold user info after registration
 
-import DateOfBirth from '@/components/DateOfBirth';
-import InputField from '@/components/InputField';
+  return (
+    <View style={styles.container}>
+      {userInfo ? (
+        <SuccessPage userInfo={userInfo} onBack={() => setUserInfo(null)} />
+      ) : (
+        <RegistrationForm onRegister={(info) => setUserInfo(info)} />
+      )}
 
-interface State {
-  fullName: string;
-  username: string;
-  email: string;
-  gender: string;
-  password: string;
-  dateOfBirth: Date;
-  showDatePicker: boolean;
-  termsAccepted: boolean;
-  isPasswordFocused: boolean;
-}
-
-// interface Props {
-//   navigation: NavigationProp<any>;
-// }
-
-export default class Index extends Component<{}, State> {
-  constructor(props: {}) {
-    super(props);
-    this.state = {
-      fullName: '',
-      username: '',
-      email: '',
-      gender: '',
-      password: '',
-      dateOfBirth: new Date(),
-      showDatePicker: false,
-      termsAccepted: false,
-      isPasswordFocused: false,
-
-    };
-  }
-
-  handleDateChange = (event: unknown, selectedDate?: Date) => {
-    this.setState({ showDatePicker: false });
-    if (selectedDate) {
-      this.setState({ dateOfBirth: selectedDate });
-    }
-  };
-
-  handleRegister = () => {
-    const { fullName, username, email, gender, password, dateOfBirth, termsAccepted, isPasswordFocused } = this.state;
-    if (!termsAccepted) {
-      Alert.alert('Error', 'You must accept the terms and conditions.');
-      return;
-    }
-
-    Alert.alert(
-      'Registration Info',
-      `Name: ${fullName}\nUsername: ${username}\nEmail: ${email}\nGender: ${gender}\nDOB: ${dateOfBirth.toDateString()}`
-    );
-  };
-
-  render() {
-    const { fullName, username, email, gender, password, dateOfBirth, showDatePicker, termsAccepted, isPasswordFocused } = this.state;
-
-    return (
-      <View style={styles.container}>
-        <View style={styles.form}>
-        {/* <View style={styles.leftSide}> */}
-          <Text style={styles.heading}>Register Here</Text>
-            <View style={styles.row}>
-              <InputFiled
-                label="Full Name"
-                value={fullName}
-                onChangeText={(text) => this.setState({ fullName: text })}
-              />
-              <InputField
-              label="Username"
-              value={username}
-              onChangeText={(text) => this.setState({ username: text })}
-            />
-            </View>
-            <InputField
-              label="Email"
-              value={email}
-              onChangeText={(text) => this.setState({ email: text })}
-              keyboardType="email-address"
-            />
-
-            <View style={styles.row}>
-            <DateOfBirth
-              selectedDate={dateOfBirth}
-              onDateChange={(newDate) => this.setState({ dateOfBirth: newDate })}
-            />
-              
-              <Picker
-                selectedValue={gender}
-                onValueChange={(value: string) => this.setState({ gender: value })}
-                style={[styles.input, styles.halfWidth]}
-              >
-                <Picker.Item label="Select Gender" value="" />
-                <Picker.Item label="Male" value="male" />
-                <Picker.Item label="Female" value="female" />
-                <Picker.Item label="Other" value="other" />
-              </Picker>
-            </View>
-
-            <InputField
-                label="Password"
-                value={password}
-                onChangeText={(text) => this.setState({ password: text })}
-                onFocus={() => this.setState({ isPasswordFocused: true })}
-                onBlur={() => this.setState({ isPasswordFocused: false })}
-                />
-        {isPasswordFocused && <PasswordMeter password={password} />}
-            
-            {/* <View style={styles.checkboxContainer}>
-              <CheckBox
-                value={termsAccepted}
-                onValueChange={(value: string) => this.setState({ termsAccepted: value })}
-              />
-              <Text style={styles.checkboxText}>
-                I acknowledge that I have read and accept the{' '}
-                <Text style={styles.link}>Terms of Use Agreement</Text> and{' '}
-                <Text style={styles.link}>Privacy Policy</Text>.
-              </Text>
-            </View> */}
-            <Button title="Create Account" onPress={this.handleRegister} />
-          </View>
-        {/* </View>
-        <View style={styles.rightSide}>
-        
-        </View> */}
-
-        
-      </View>
-      
-    );
-  }
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f9f9f9',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 20,
-  },
-  heading: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
-    textAlign: 'center',
-  },
-  form: {
-    width: '70%',
-    padding: 20,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 10,
-    backgroundColor: '#ffffff',
-  },
-  row: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    //marginBottom: 15,
-  },
-  input: {
-    height: 30,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    borderRadius: 5,
-    paddingHorizontal: 10,
-    marginBottom: 15,
-    backgroundColor: '#ffffff',
-    fontSize: 14,
-  },
-  halfWidth: {
-    width: '48%',
-  },
-  leftSide: {
-    width: '60%',
-  },
-  rightSide: {
-    width: '40%',
-    backgroundColor: "pink",
-  },
-  dateText: {
-    marginLeft: 10,
-    fontSize: 16,
-    color: '#555',
-  },
-  checkboxContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginVertical: 15,
-  },
-  checkboxText: {
-    marginLeft: 8,
-    flex: 1,
-  },
-  link: {
-    color: '#007BFF',
-    textDecorationLine: 'underline',
-  },
+  container: { flex: 1 },
 });

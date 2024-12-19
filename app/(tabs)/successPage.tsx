@@ -1,32 +1,37 @@
-import React from 'react';
-import { StyleSheet, View, Text, Button } from 'react-native';
-import { NavigationProp } from '@react-navigation/native';
+import React from "react";
+import { View, Text, Button, StyleSheet } from "react-native";
 
-interface Props {
-  navigation: NavigationProp<any>;
+interface SuccessPageProps {
+  userInfo: string;
+  onBack: () => void;
 }
 
-const SuccessPage: React.FC<Props> = ({ navigation }) => {
+const SuccessPage: React.FC<SuccessPageProps> = ({ userInfo, onBack }) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.heading}>Thank you for registering!</Text>
-      <Button title="Go Back to Register" onPress={() => navigation.navigate('Index')} />
+      <Text style={styles.heading}>Registration Successful</Text>
+      <Text style={styles.userInfo}>{userInfo}</Text>
+      <Button title="Back to Register" onPress={onBack} />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
+  container: { 
+    flex: 1, 
+    justifyContent: "center", 
+    padding: 20 
   },
-  heading: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
+  heading: { 
+    fontSize: 24, 
+    marginBottom: 20, 
+    textAlign: "center" 
+  },
+  userInfo: { 
+    fontSize: 18, 
+    marginBottom: 20, 
+    textAlign: "center" 
   },
 });
 
-//export default ThankYou;
+export default SuccessPage;
