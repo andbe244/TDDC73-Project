@@ -63,7 +63,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onRegister }) => {
             year: 'numeric',
         });
 
-    const userInfo = `Name: ${fullName}\nUsername: ${username}\nEmail: ${email}\nGender: ${gender}\nDOB: ${formattedDateString}`;
+    const userInfo = `Name: ${fullName}\nUsername: ${username}\nEmail: ${email}\nGender: ${gender}\nDate of Birth: ${formattedDateString}`;
     onRegister(userInfo);
     };
       
@@ -127,7 +127,12 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onRegister }) => {
         <Text style={styles.successText}>Passwords match!</Text>
         )}
 
-        <Button title="Create Account" onPress={handleRegister} disabled={!isFormComplete}/>
+        {/* <Button title="Create Account" onPress={handleRegister} disabled={!isFormComplete}/> */}
+
+        <TouchableOpacity style={styles.button} onPress={handleRegister} disabled={!isFormComplete}>
+            <Text style={styles.buttonText}>Create Account</Text>
+        </TouchableOpacity>
+
       </View>
     </View>
   );
@@ -250,6 +255,27 @@ const styles = StyleSheet.create({
     color: "green",
     fontSize: 12,
     marginBottom: 15,
+  },
+  button: {
+    width: 250, 
+    paddingVertical: 12, 
+    paddingHorizontal: 30, 
+    marginTop: 20,
+    backgroundColor: "#FF00FF", 
+    borderRadius: 20, 
+    alignItems: "center", 
+    justifyContent: "center",
+    alignSelf: 'center',
+    elevation: 3, 
+    shadowColor: "#000", 
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+  },
+  buttonText: {
+    fontSize: 16,
+    color: "#fff", 
+    fontWeight: "bold", 
   },
 });
 
