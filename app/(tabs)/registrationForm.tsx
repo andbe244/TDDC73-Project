@@ -52,9 +52,20 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onRegister }) => {
             return;
         }
         
-        const userInfo = `Name: ${fullName}\nUsername: ${username}\nEmail: ${email}\nGender: ${gender}\nDOB: ${DateOfBirth}`;
-        onRegister(userInfo);
-        };
+        // Format the date of birth
+        const formattedDOB = `${day.padStart(2, '0')}-${month.padStart(2, '0')}-${year}`;
+
+        // Format the date to a more readable format
+        const formattedDate = new Date(`${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`);
+        const formattedDateString = formattedDate.toLocaleDateString('en-GB', {
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric',
+        });
+
+    const userInfo = `Name: ${fullName}\nUsername: ${username}\nEmail: ${email}\nGender: ${gender}\nDOB: ${formattedDateString}`;
+    onRegister(userInfo);
+    };
       
   return (
     <View style={styles.container}>
