@@ -1,51 +1,49 @@
 import React from 'react';
-import { StyleSheet, View, Text, TextInput } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TextInputProps } from 'react-native';
 
-interface InputFieldProps {
-  label?: string; 
-  value: string; 
-  onChangeText: (text: string) => void; 
+interface InputFieldProps extends TextInputProps {
+  label: string; // Label for the input field
 }
 
-const InputField: React.FC<InputFieldProps> = ({ label, value, onChangeText }) => {
+const InputField: React.FC<InputFieldProps> = ({
+  label,
+  value,
+  onChangeText,
+  onFocus,
+  onBlur,
+  ...rest // Spread remaining props
+}) => {
   return (
-    <View style={styles.inputFieldContainer}>
-      {/* Render Label if Provided */}
+    <View style={styles.container}>
       {label && <Text style={styles.label}>{label}</Text>}
-
-      {/* TextInput */}
       <TextInput
         style={styles.input}
         value={value}
         onChangeText={onChangeText}
-        placeholder="Enter text"
-        placeholderTextColor="#aaa" 
-        underlineColorAndroid="transparent" 
-        selectionColor="#000" 
+        onFocus={onFocus} // Forward onFocus to TextInput
+        onBlur={onBlur}   // Forward onBlur to TextInput
+        {...rest}         // Forward other props (e.g., secureTextEntry)
       />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  inputFieldContainer: {
-    marginBottom: 15, 
-    marginLeft: 25, 
-    width: 200,
+  container: {
+    marginBottom: 15,
   },
   label: {
     fontSize: 14,
+    marginBottom: 5,
     color: '#666',
-    marginBottom: 5, 
   },
   input: {
-    height: 40, 
-    borderBottomWidth: 1, 
+    height: 40,
+    borderBottomWidth: 1,
     borderBottomColor: '#ccc',
-    marginLeft: 10,
-    fontSize: 16, 
-    color: '#000', 
-    paddingVertical: 0, 
+    fontSize: 16,
+    color: '#000',
+    backgroundColor: 'transparent', // Ensure transparent background for cursor visibility
   },
 });
 
