@@ -81,10 +81,13 @@ const styles = StyleSheet.create({
   },
   picker: {
     height: 30,
-    backgroundColor: '#fff',
-    borderColor: '#ccc',
-    borderWidth: 1,
-    borderRadius: 5,
+    marginTop: 15,
+    borderColor: '#fff',
+    borderBottomColor: '#ccc',
+    paddingHorizontal: 10,
+    marginBottom: 15,
+    backgroundColor: '#ffffff',
+    fontSize: 14,
   },
   thirdWidth: {
     width: '30%',
