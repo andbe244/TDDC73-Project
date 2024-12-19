@@ -22,8 +22,8 @@ const SuccessPage: React.FC<SuccessPageProps> = ({ userInfo, onBack }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center", // Center content vertically
-    alignItems: "center", // Center content horizontally
+    justifyContent: "center",
+    alignItems: "center",
     padding: 20,
     backgroundColor: "#f9f9f9",
   },
@@ -31,32 +31,32 @@ const styles = StyleSheet.create({
     fontSize: 24,
     marginBottom: 20,
     textAlign: "center",
-    fontWeight: "bold", // Make heading bold for emphasis
+    fontWeight: "bold",
   },
   userInfo: {
     fontSize: 18,
-    marginBottom: 40, // Increased bottom margin to space out the button
+    marginBottom: 40,
     textAlign: "left",
-    color: "#333", // Darker color for better contrast and readability
+    color: "#333", 
   },
   button: {
-    width: 250, // Slightly larger button for better clickability
-    paddingVertical: 12, // Vertical padding for a better height
-    paddingHorizontal: 30, // Horizontal padding for a wider button
-    backgroundColor: "#FF00FF", // Button background color
-    borderRadius: 8, // Rounded corners for a more modern look
-    alignItems: "center", // Center text horizontally in the button
-    justifyContent: "center", // Center text vertically in the button
-    elevation: 3, // Add shadow effect for Android devices
-    shadowColor: "#000", // iOS shadow color
-    shadowOffset: { width: 0, height: 2 }, // Shadow offset
-    shadowOpacity: 0.1, // Shadow opacity for subtle effect
-    shadowRadius: 5, // Shadow blur radius
+    width: 250, 
+    paddingVertical: 12, 
+    paddingHorizontal: 30, 
+    backgroundColor: "#FF00FF", 
+    borderRadius: 20, 
+    alignItems: "center", 
+    justifyContent: "center", 
+    elevation: 3, 
+    shadowColor: "#000", 
+    shadowOffset: { width: 0, height: 2 }, 
+    shadowOpacity: 0.1, 
+    shadowRadius: 5, 
   },
   buttonText: {
     fontSize: 16,
-    color: "#fff", // White text color for contrast
-    fontWeight: "bold", // Make button text bold for emphasis
+    color: "#fff", 
+    fontWeight: "bold", 
   },
 });
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import ProgressBar from './ProgressBar'; // Import your custom ProgressBar
+import ProgressBar from './ProgressBar';
 
 interface PasswordMeterProps {
   password: string; // Password to evaluate
@@ -11,7 +11,6 @@ const PasswordMeter: React.FC<PasswordMeterProps> = ({ password }) => {
     let strength = 0;
     const tips: string[] = [];
 
-    // Evaluate password strength
     if (password.length >= 8) {
       strength += 25;
     } else {
@@ -48,7 +47,7 @@ const PasswordMeter: React.FC<PasswordMeterProps> = ({ password }) => {
       <View style={styles.progressContainer}>
         <ProgressBar
           progress={strength / 100} // A value between 0 and 1
-          color={strength >= 75 ? 'green' : strength >= 50 ? 'orange' : 'red'} // Dynamic color
+          color={strength >= 75 ? 'green' : strength >= 50 ? 'orange' : 'red'}
         />
         <Text style={styles.feedback}>{feedback}</Text>
       </View>
@@ -79,19 +78,14 @@ const styles = StyleSheet.create({
   feedback: {
     fontSize: 14,
     fontWeight: 'bold',
-    //textAlign: 'right',
     right: 10,
     marginBottom: 5,
   },
   tipsContainer: {
     width: 450,
-    //maxWidth: 600,
     height: 60,
     padding: 10,
     backgroundColor: '#f9f9f9',
-    //borderWidth: 1,
-    //borderColor: '#ddd',
-    //borderRadius: 5,
     marginLeft: 1,
     marginBottom: 20,
     marginRight:18,

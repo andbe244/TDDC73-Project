@@ -2,15 +2,15 @@ import React from 'react';
 import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 
 interface GenderPickerProps {
-  label: string;               // Label for the gender picker
-  selectedGender: string;      // Current selected gender
-  onGenderChange: (gender: string) => void; // Function to handle gender selection
+  label: string;
+  selectedGender: string;
+  onGenderChange: (gender: string) => void;
 }
 
 const GenderPicker: React.FC<GenderPickerProps> = ({ label, selectedGender, onGenderChange }) => {
   return (
     <View style={styles.container}>
-      {label && <Text style={styles.label}>{label}</Text>} {/* Display the label */}
+      {label && <Text style={styles.label}>{label}</Text>}
 
       <View style={styles.row}>
         <TouchableOpacity

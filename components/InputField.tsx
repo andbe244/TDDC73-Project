@@ -57,7 +57,6 @@ const InputField: React.FC<InputFieldProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    //marginBottom: 15,
   },
   label: {
     fontSize: 14,
@@ -65,7 +64,7 @@ const styles = StyleSheet.create({
     color: '#666',
   },
   inputContainer: {
-    flexDirection: "row", // Align input field and button horizontally
+    flexDirection: "row",
     alignItems: "center",
   },
   input: {
@@ -77,18 +76,16 @@ const styles = StyleSheet.create({
     color: '#000',
     backgroundColor: 'transparent',
     marginBottom: 15,
-    flex: 1, // Allow input to take remaining space
+    flex: 1,
   },
   toggleButton: {
     marginLeft: 15,
-     // Negative margin to move closer to the input
     alignItems: "center",
   },
   toggleImage: {
-
-    width: 20, // Adjust width of the icon
-    height: 20, // Adjust height of the icon
-    resizeMode: "contain", // Prevent distortion
+    width: 20,
+    height: 20,
+    resizeMode: "contain",
   },
 });
 

@@ -4,7 +4,7 @@ import RegistrationForm from "./registrationForm";
 import SuccessPage from "./successPage";
 
 export default function Index() {
-  const [userInfo, setUserInfo] = useState<string | null>(null);  // State to hold user info after registration
+  const [userInfo, setUserInfo] = useState<string | null>(null);
 
   return (
     <View style={styles.container}>

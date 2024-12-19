@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, View, Button, Alert, TouchableOpacity } from "react-native";
-import { Picker } from '@react-native-picker/picker'; // Updated import
+import { Picker } from '@react-native-picker/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import InputField from '@/components/InputField';
 import PasswordMeter from '@/components/PasswordMeter';
@@ -19,14 +19,12 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onRegister }) => {
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   
-  // State for date of birth inputs
   const [day, setDay] = useState<string>("");
   const [month, setMonth] = useState<string>("");
   const [year, setYear] = useState<string>("");
 
   const [isPasswordFocused, setIsPasswordFocused] = useState<boolean>(false);
 
-  // Function to handle Date of Birth change
   const handleDateOfBirthChange = (day: string, month: string, year: string) => {
     setDay(day);
     setMonth(month);
@@ -52,10 +50,8 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onRegister }) => {
             return;
         }
         
-        // Format the date of birth
         const formattedDOB = `${day.padStart(2, '0')}-${month.padStart(2, '0')}-${year}`;
 
-        // Format the date to a more readable format
         const formattedDate = new Date(`${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`);
         const formattedDateString = formattedDate.toLocaleDateString('en-GB', {
             day: '2-digit',
@@ -126,8 +122,6 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onRegister }) => {
         {isPasswordMatching() && confirmPassword !== "" && (
         <Text style={styles.successText}>Passwords match!</Text>
         )}
-
-        {/* <Button title="Create Account" onPress={handleRegister} disabled={!isFormComplete}/> */}
 
         <TouchableOpacity style={styles.button} onPress={handleRegister} disabled={!isFormComplete}>
             <Text style={styles.buttonText}>Create Account</Text>
@@ -230,7 +224,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#f0f0f0",
   },
   selectedButton: {
-    backgroundColor: "#007BFF", // Highlight color for the selected button
+    backgroundColor: "#007BFF",
   },
   genderText: {
     color: "#333",
