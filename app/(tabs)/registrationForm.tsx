@@ -33,17 +33,26 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onRegister }) => {
     return password === confirmPassword;
   };
 
-  const isFormComplete = fullName && username && email && gender && isPasswordFocused;
+  const isFormComplete = () =>
+    fullName.trim() &&
+    username.trim() &&
+    email.trim() &&
+    gender &&
+    password &&
+    confirmPassword &&
+    isPasswordMatching();
+  
 
     const handleRegister = () => {
-        if (!fullName || !username || !email || !gender || !password || !confirmPassword) {
-        Alert.alert("Error", "Please fill in all fields.");
+      if (!isFormComplete()) {
+        Alert.alert("Error", "Please fill in all fields and ensure passwords match.");
         return;
-        }
-        const userInfo = `Name: ${fullName}\nUsername: ${username}\nEmail: ${email}\nGender: ${gender}\nDOB: ${dateOfBirth.toDateString()}`;
-        onRegister(userInfo); // Pass user info back to parent
+      }
+    
+      const userInfo = `Name: ${fullName}\nUsername: ${username}\nEmail: ${email}\nGender: ${gender}\nDOB: ${dateOfBirth.toDateString()}`;
+      onRegister(userInfo);
     };
-
+    
   return (
     <View style={styles.container}>
       <View style={styles.form}>
@@ -105,7 +114,8 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onRegister }) => {
         <Text style={styles.successText}>Passwords match!</Text>
         )}
 
-        <Button title="Create Account" onPress={handleRegister} disabled={!isFormComplete}/>
+<Button title="Create Account" onPress={handleRegister} disabled={!isFormComplete()} />
+
       </View>
     </View>
   );
