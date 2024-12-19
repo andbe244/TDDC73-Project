@@ -63,7 +63,7 @@ export default class Index extends Component<{}, State> {
     return (
       <View style={styles.container}>
         <View style={styles.form}>
-        <View style={styles.leftSide}>
+        {/* <View style={styles.leftSide}> */}
           <Text style={styles.heading}>Register Here</Text>
             <View style={styles.row}>
               <TextInput
@@ -126,10 +126,12 @@ export default class Index extends Component<{}, State> {
             </View> */}
             <Button title="Create Account" onPress={this.handleRegister} />
           </View>
-        </View>
+        {/* </View>
         <View style={styles.rightSide}>
         
-        </View>
+        </View> */}
+
+        
       </View>
       
     );
