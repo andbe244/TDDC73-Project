@@ -40,10 +40,11 @@ const styles = StyleSheet.create({
   input: {
     height: 40,
     borderBottomWidth: 1,
+    padding: 5,
     borderBottomColor: '#ccc',
     fontSize: 16,
     color: '#000',
-    backgroundColor: 'transparent', // Ensure transparent background for cursor visibility
+    backgroundColor: 'transparent', 
   },
 });
 
