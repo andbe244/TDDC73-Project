@@ -1,8 +1,9 @@
-<<<<<<< HEAD
 import React, { Component } from 'react';
-import { StyleSheet, Text, TextInput, View, Button, Alert } from 'react-native';
+import { StyleSheet, Text, TextInput, View, Button, Alert, Image } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
+
+//import SuccessPage from "./successPage";
 
 import DateOfBirth from '@/components/DateOfBirth';
 
@@ -16,6 +17,10 @@ interface State {
   showDatePicker: boolean;
   termsAccepted: boolean;
 }
+
+// interface Props {
+//   navigation: NavigationProp<any>;
+// }
 
 export default class Index extends Component<{}, State> {
   constructor(props: {}) {
@@ -57,126 +62,78 @@ export default class Index extends Component<{}, State> {
 
     return (
       <View style={styles.container}>
-        <Text style={styles.heading}>Join with your email address</Text>
         <View style={styles.form}>
-          <View style={styles.row}>
-            <TextInput
+        <View style={styles.leftSide}>
+          <Text style={styles.heading}>Register Here</Text>
+            <View style={styles.row}>
+              <TextInput
+                style={[styles.input, styles.halfWidth]}
+                placeholder="Full Name"
+                value={fullName}
+                onChangeText={(text) => this.setState({ fullName: text })}
+              />
+              <TextInput
               style={[styles.input, styles.halfWidth]}
-              placeholder="Full Name"
-              value={fullName}
-              onChangeText={(text) => this.setState({ fullName: text })}
+              placeholder="Username"
+              value={username}
+              onChangeText={(text) => this.setState({ username: text })}
             />
+            </View>
             <TextInput
-            style={[styles.input, styles.halfWidth]}
-            placeholder="Username"
-            value={username}
-            onChangeText={(text) => this.setState({ username: text })}
-          />
-          </View>
-          <TextInput
-            style={styles.input}
-            placeholder="Email"
-            value={email}
-            onChangeText={(text) => this.setState({ email: text })}
-            keyboardType="email-address"
-          />
+              style={styles.input}
+              placeholder="Email"
+              value={email}
+              onChangeText={(text) => this.setState({ email: text })}
+              keyboardType="email-address"
+            />
 
-          <View style={styles.row}>
-          <DateOfBirth
-            selectedDate={dateOfBirth}
-            onDateChange={(newDate) => this.setState({ dateOfBirth: newDate })}
-          />
+            <View style={styles.row}>
+            <DateOfBirth
+              selectedDate={dateOfBirth}
+              onDateChange={(newDate) => this.setState({ dateOfBirth: newDate })}
+            />
+              
+              <Picker
+                selectedValue={gender}
+                onValueChange={(value: string) => this.setState({ gender: value })}
+                style={[styles.input, styles.halfWidth]}
+              >
+                <Picker.Item label="Select Gender" value="" />
+                <Picker.Item label="Male" value="male" />
+                <Picker.Item label="Female" value="female" />
+                <Picker.Item label="Other" value="other" />
+              </Picker>
+            </View>
+
+            <TextInput
+              style={styles.input}
+              placeholder="Password"
+              value={password}
+              onChangeText={(text) => this.setState({ password: text })}
+              secureTextEntry={true}
+            />
             
-            <Picker
-              selectedValue={gender}
-              onValueChange={(value: string) => this.setState({ gender: value })}
-              style={[styles.input, styles.halfWidth]}
-            >
-              <Picker.Item label="Select Gender" value="" />
-              <Picker.Item label="Male" value="male" />
-              <Picker.Item label="Female" value="female" />
-              <Picker.Item label="Other" value="other" />
-            </Picker>
+            {/* <View style={styles.checkboxContainer}>
+              <CheckBox
+                value={termsAccepted}
+                onValueChange={(value: string) => this.setState({ termsAccepted: value })}
+              />
+              <Text style={styles.checkboxText}>
+                I acknowledge that I have read and accept the{' '}
+                <Text style={styles.link}>Terms of Use Agreement</Text> and{' '}
+                <Text style={styles.link}>Privacy Policy</Text>.
+              </Text>
+            </View> */}
+            <Button title="Create Account" onPress={this.handleRegister} />
           </View>
-
-          <TextInput
-            style={styles.input}
-            placeholder="Password"
-            value={password}
-            onChangeText={(text) => this.setState({ password: text })}
-            secureTextEntry={true}
-          />
-          <View style={styles.row}>
-            <Button
-              title="Select Date of Birth"
-              onPress={() => this.setState({ showDatePicker: true })}
-            />
-            <Text style={styles.dateText}>
-              {dateOfBirth.toDateString()}
-            </Text>
-          </View>
-          {showDatePicker && (
-            <DateTimePicker
-              value={dateOfBirth}
-              mode="date"
-              display="default"
-              onChange={this.handleDateChange}
-            />
-          )}
-          {/* <View style={styles.checkboxContainer}>
-            <CheckBox
-              value={termsAccepted}
-              onValueChange={(value: string) => this.setState({ termsAccepted: value })}
-            />
-            <Text style={styles.checkboxText}>
-              I acknowledge that I have read and accept the{' '}
-              <Text style={styles.link}>Terms of Use Agreement</Text> and{' '}
-              <Text style={styles.link}>Privacy Policy</Text>.
-            </Text>
-          </View> */}
-          <Button title="Create Account" onPress={this.handleRegister} />
+        </View>
+        <View style={styles.rightSide}>
+        
         </View>
       </View>
+      
     );
   }
-=======
-import { Image, StyleSheet, Platform, View, Text} from 'react-native';
-import React, { useState } from 'react';
-
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
-import InputField from '@/components/InputField';
-
-
-
-export default function HomeScreen() {
-
-  const [name, setName] = useState<string>('');
-  const [mail, setMail] = useState<string>('');
-  const [username, setUsername] = useState<string>('');
-  return (
-    <View>
-        <Text style={styles.white}> hello</Text>
-        <InputField 
-        label="Full Name"
-        value={name}
-        onChangeText={setName}
-      />
-      <InputField 
-        label="Email"
-        value={mail}
-        onChangeText={setMail}
-      />
-      <InputField 
-        label="Username"
-        value={username}
-        onChangeText={setUsername}
-      />
-    </View>
-  );
->>>>>>> 62b88b6c07f14da67e572d88d8f96065f2a773ba
 }
 
 const styles = StyleSheet.create({
@@ -194,7 +151,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   form: {
-    width: '60%',
+    width: '70%',
     padding: 20,
     borderWidth: 1,
     borderColor: '#ccc',
@@ -204,19 +161,27 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 15,
+    //marginBottom: 15,
   },
   input: {
-    height: 40,
+    height: 30,
     borderColor: '#ccc',
     borderWidth: 1,
     borderRadius: 5,
     paddingHorizontal: 10,
     marginBottom: 15,
     backgroundColor: '#ffffff',
+    fontSize: 14,
   },
   halfWidth: {
     width: '48%',
+  },
+  leftSide: {
+    width: '60%',
+  },
+  rightSide: {
+    width: '40%',
+    backgroundColor: "pink",
   },
   dateText: {
     marginLeft: 10,

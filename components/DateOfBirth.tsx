@@ -51,7 +51,7 @@ const DateOfBirth: React.FC<Props> = ({ selectedDate, onDateChange }) => {
         {months.map((month) => (
           <Picker.Item
             key={month}
-            label={new Date(0, month).toLocaleString('default', { month: 'long' })}
+            label={new Date(0, month).toLocaleString('default', { month: 'short' })}
             value={month}
           />
         ))}
@@ -76,17 +76,18 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 15,
+    //marginBottom: 15,
+    width: '48%',
   },
   picker: {
-    height: 40,
+    height: 30,
     backgroundColor: '#fff',
     borderColor: '#ccc',
     borderWidth: 1,
     borderRadius: 5,
   },
   thirdWidth: {
-    width: '70%',
+    width: '30%',
   },
 });
 
