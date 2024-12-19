@@ -23,18 +23,18 @@ const DateOfBirth: React.FC<DateOfBirthProps> = ({ label, day, month, year, onDa
 
     // Check if all fields are filled
     if (!inputDay || !inputMonth || !inputYear) {
-      Alert.alert('Error', 'Please fill all the fields');
+      //Alert.alert('Error', 'Please fill all the fields');
       return false;
     }
 
     // Check if day, month, year are numbers and within reasonable ranges
     if (isNaN(dayInt) || isNaN(monthInt) || isNaN(yearInt)) {
-      Alert.alert('Error', 'Please enter valid numbers');
+      //Alert.alert('Error', 'Please enter valid numbers');
       return false;
     }
 
     if (monthInt < 1 || monthInt > 12) {
-      Alert.alert('Error', 'Please enter a valid month (1-12)');
+      //Alert.alert('Error', 'Please enter a valid month (1-12)');
       return false;
     }
 
@@ -63,20 +63,20 @@ const DateOfBirth: React.FC<DateOfBirthProps> = ({ label, day, month, year, onDa
     }
 
     if (dayInt < 1 || dayInt > daysInMonth[monthInt - 1]) {
-      Alert.alert('Error', `Invalid day for the given month. Please enter a valid day (1-${daysInMonth[monthInt - 1]})`);
+      //Alert.alert('Error', `Invalid day for the given month. Please enter a valid day (1-${daysInMonth[monthInt - 1]})`);
       return false;
     }
 
     // Check if the year is reasonable (optional, e.g., between 1900 and current year)
     const currentYear = new Date().getFullYear();
     if (yearInt < 1900 || yearInt > currentYear) {
-      Alert.alert('Error', `Please enter a valid year (1900-${currentYear})`);
+      //Alert.alert('Error', `Please enter a valid year (1900-${currentYear})`);
       return false;
     }
 
     // If all checks pass, update the parent component with the new date of birth
     onDateOfBirthChange(inputDay, inputMonth, inputYear);
-    Alert.alert('Success', `Date of Birth is: ${inputDay}/${inputMonth}/${inputYear}`);
+    //Alert.alert('Success', `Date of Birth is: ${inputDay}/${inputMonth}/${inputYear}`);
     return true;
   };
 

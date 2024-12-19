@@ -46,17 +46,15 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onRegister }) => {
     confirmPassword &&
     isPasswordMatching();
   
-
-
     const handleRegister = () => {
         if (!isFormComplete()) {
-          Alert.alert("Error", "Please fill in all fields and ensure passwords match.");
-          return;
+            Alert.alert("Error", "Please fill in all fields and ensure passwords match.");
+            return;
         }
-      
-        const userInfo = `Name: ${fullName}\nUsername: ${username}\nEmail: ${email}\nGender: ${gender}\nDOB: ${dateOfBirth.toDateString()}`;
+        
+        const userInfo = `Name: ${fullName}\nUsername: ${username}\nEmail: ${email}\nGender: ${gender}\nDOB: ${DateOfBirth}`;
         onRegister(userInfo);
-      };
+        };
       
   return (
     <View style={styles.container}>
@@ -159,6 +157,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     backgroundColor: '#ffffff',
     fontSize: 14,
+    marginTop: 10,
   },
   picker: {
     height: 30,
