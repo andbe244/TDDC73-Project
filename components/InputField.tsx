@@ -31,6 +31,8 @@ const InputField: React.FC<InputFieldProps> = ({
 const styles = StyleSheet.create({
   container: {
     marginBottom: 15,
+    marginLeft: 2,
+  
   },
   label: {
     fontSize: 14,
