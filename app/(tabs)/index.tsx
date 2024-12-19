@@ -2,10 +2,13 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, TextInput, View, Button, Alert, Image } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import InputFiled from '@/components/InputField';
+import PasswordMeter from '@/components/PasswordMeter';
 
 //import SuccessPage from "./successPage";
 
 import DateOfBirth from '@/components/DateOfBirth';
+import InputField from '@/components/InputField';
 
 interface State {
   fullName: string;
@@ -16,6 +19,7 @@ interface State {
   dateOfBirth: Date;
   showDatePicker: boolean;
   termsAccepted: boolean;
+  isPasswordFocused: boolean;
 }
 
 // interface Props {
@@ -34,6 +38,8 @@ export default class Index extends Component<{}, State> {
       dateOfBirth: new Date(),
       showDatePicker: false,
       termsAccepted: false,
+      isPasswordFocused: false,
+
     };
   }
 
@@ -45,7 +51,7 @@ export default class Index extends Component<{}, State> {
   };
 
   handleRegister = () => {
-    const { fullName, username, email, gender, password, dateOfBirth, termsAccepted } = this.state;
+    const { fullName, username, email, gender, password, dateOfBirth, termsAccepted, isPasswordFocused } = this.state;
     if (!termsAccepted) {
       Alert.alert('Error', 'You must accept the terms and conditions.');
       return;
@@ -58,7 +64,7 @@ export default class Index extends Component<{}, State> {
   };
 
   render() {
-    const { fullName, username, email, gender, password, dateOfBirth, showDatePicker, termsAccepted } = this.state;
+    const { fullName, username, email, gender, password, dateOfBirth, showDatePicker, termsAccepted, isPasswordFocused } = this.state;
 
     return (
       <View style={styles.container}>
@@ -66,22 +72,19 @@ export default class Index extends Component<{}, State> {
         <View style={styles.leftSide}>
           <Text style={styles.heading}>Register Here</Text>
             <View style={styles.row}>
-              <TextInput
-                style={[styles.input, styles.halfWidth]}
-                placeholder="Full Name"
+              <InputFiled
+                label="Full Name"
                 value={fullName}
                 onChangeText={(text) => this.setState({ fullName: text })}
               />
-              <TextInput
-              style={[styles.input, styles.halfWidth]}
-              placeholder="Username"
+              <InputField
+              label="Username"
               value={username}
               onChangeText={(text) => this.setState({ username: text })}
             />
             </View>
-            <TextInput
-              style={styles.input}
-              placeholder="Email"
+            <InputField
+              label="Email"
               value={email}
               onChangeText={(text) => this.setState({ email: text })}
               keyboardType="email-address"
@@ -105,13 +108,14 @@ export default class Index extends Component<{}, State> {
               </Picker>
             </View>
 
-            <TextInput
-              style={styles.input}
-              placeholder="Password"
-              value={password}
-              onChangeText={(text) => this.setState({ password: text })}
-              secureTextEntry={true}
-            />
+            <InputField
+                label="Password"
+                value={password}
+                onChangeText={(text) => this.setState({ password: text })}
+                onFocus={() => this.setState({ isPasswordFocused: true })}
+                onBlur={() => this.setState({ isPasswordFocused: false })}
+                />
+        {isPasswordFocused && <PasswordMeter password={password} />}
             
             {/* <View style={styles.checkboxContainer}>
               <CheckBox
