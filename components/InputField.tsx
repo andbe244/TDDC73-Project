@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, StyleSheet, TextInputProps, TouchableOpacity, TextStyle } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TextInputProps, TouchableOpacity, TextStyle, Image } from 'react-native';
 
 interface InputFieldProps extends TextInputProps {
   label: string; // Label for the input field
@@ -34,13 +34,21 @@ const InputField: React.FC<InputFieldProps> = ({
         />
         {togglePasswordVisibility && (
             <TouchableOpacity
-              onPress={() => setIsPasswordVisible(!isPasswordVisible)}
-              style={styles.toggleButton}
-            >
-              <Text style={styles.toggleText}>
-                {isPasswordVisible ? "Hide" : "Show"}
-              </Text>
-            </TouchableOpacity>
+            onPress={() => setIsPasswordVisible(!isPasswordVisible)}
+            style={styles.toggleButton}
+          >
+            <Image
+              source={
+                isPasswordVisible
+                  ? require('./hide.png') // Correct path to "hide" image
+                  : require('./show.png') // Correct path to "show" image
+              }
+              style={styles.toggleImage}
+            />
+          </TouchableOpacity>
+          
+          
+          
           )}
       </View>
     </View>
@@ -67,18 +75,20 @@ const styles = StyleSheet.create({
     borderBottomColor: '#ccc',
     fontSize: 16,
     color: '#000',
-    backgroundColor: 'transparent', 
+    backgroundColor: 'transparent',
     marginBottom: 15,
-    flex: 1,
+    flex: 1, // Allow input to take remaining space
   },
   toggleButton: {
-    paddingHorizontal: 10,
-    //justifyContent: "center",
+    marginLeft: 15,
+     // Negative margin to move closer to the input
     alignItems: "center",
   },
-  toggleText: {
-    color: "#007BFF",
-    fontSize: 14,
+  toggleImage: {
+
+    width: 20, // Adjust width of the icon
+    height: 20, // Adjust height of the icon
+    resizeMode: "contain", // Prevent distortion
   },
 });
 
