@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, Button, Alert } from "react-native";
+import { StyleSheet, Text, View, Button, Alert, TouchableOpacity } from "react-native";
 import { Picker } from '@react-native-picker/picker'; // Updated import
 import DateTimePicker from '@react-native-community/datetimepicker';
 import InputField from '@/components/InputField';
 import PasswordMeter from '@/components/PasswordMeter';
 import DateOfBirth from '@/components/DateOfBirth';
+import GenderPicker from '@/components/GenderPicker';
 
 interface RegistrationFormProps {
   onRegister: (userInfo: string) => void;
@@ -16,17 +17,20 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onRegister }) => {
   const [email, setEmail] = useState<string>("");
   const [gender, setGender] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [dateOfBirth, setDateOfBirth] = useState<Date>(new Date());
-  const [showDatePicker, setShowDatePicker] = useState<boolean>(false);
-  const [termsAccepted, setTermsAccepted] = useState<boolean>(false);
-  const [isPasswordFocused, setIsPasswordFocused] = useState<boolean>(false);
   const [confirmPassword, setConfirmPassword] = useState<string>("");
+  
+  // State for date of birth inputs
+  const [day, setDay] = useState<string>("");
+  const [month, setMonth] = useState<string>("");
+  const [year, setYear] = useState<string>("");
 
-  const handleDateChange = (event: unknown, selectedDate?: Date) => {
-    setShowDatePicker(false);
-    if (selectedDate) {
-      setDateOfBirth(selectedDate);
-    }
+  const [isPasswordFocused, setIsPasswordFocused] = useState<boolean>(false);
+
+  // Function to handle Date of Birth change
+  const handleDateOfBirthChange = (day: string, month: string, year: string) => {
+    setDay(day);
+    setMonth(month);
+    setYear(year);
   };
 
   const isPasswordMatching = () => {
@@ -43,16 +47,17 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onRegister }) => {
     isPasswordMatching();
   
 
+
     const handleRegister = () => {
-      if (!isFormComplete()) {
-        Alert.alert("Error", "Please fill in all fields and ensure passwords match.");
-        return;
-      }
-    
-      const userInfo = `Name: ${fullName}\nUsername: ${username}\nEmail: ${email}\nGender: ${gender}\nDOB: ${dateOfBirth.toDateString()}`;
-      onRegister(userInfo);
-    };
-    
+        if (!isFormComplete()) {
+          Alert.alert("Error", "Please fill in all fields and ensure passwords match.");
+          return;
+        }
+      
+        const userInfo = `Name: ${fullName}\nUsername: ${username}\nEmail: ${email}\nGender: ${gender}\nDOB: ${dateOfBirth.toDateString()}`;
+        onRegister(userInfo);
+      };
+      
   return (
     <View style={styles.container}>
       <View style={styles.form}>
@@ -70,20 +75,19 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onRegister }) => {
         />
 
         <View style={styles.row}>
-          <DateOfBirth
-            selectedDate={dateOfBirth}
-            onDateChange={(newDate) => setDateOfBirth(newDate)}
-          />
-          <Picker
-            selectedValue={gender}
-            onValueChange={(value: string) => setGender(value)}
-            style={[styles.picker, styles.halfWidth]}
-          >
-            <Picker.Item label="Select Gender" value="" />
-            <Picker.Item label="Male" value="male" />
-            <Picker.Item label="Female" value="female" />
-            <Picker.Item label="Other" value="other" />
-          </Picker>
+            <View style={styles.halfWidth}>
+                <DateOfBirth
+                  label="Date of Birth"
+                  day={day}
+                  month={month}
+                  year={year}
+                  onDateOfBirthChange={handleDateOfBirthChange}
+                />
+            </View>
+
+            <View style={styles.halfWidth}>
+                <GenderPicker label="Gender" selectedGender={gender} onGenderChange={setGender} />
+            </View>
         </View>
 
         <InputField
@@ -114,8 +118,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onRegister }) => {
         <Text style={styles.successText}>Passwords match!</Text>
         )}
 
-<Button title="Create Account" onPress={handleRegister} disabled={!isFormComplete()} />
-
+        <Button title="Create Account" onPress={handleRegister} disabled={!isFormComplete}/>
       </View>
     </View>
   );
@@ -194,6 +197,29 @@ const styles = StyleSheet.create({
   link: {
     color: '#007BFF',
     textDecorationLine: 'underline',
+  },
+  genderButtons: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: 15,
+  },
+  genderButton: {
+    flex: 1,
+    height: 40,
+    justifyContent: "center",
+    alignItems: "center",
+    borderColor: "#ccc",
+    borderWidth: 1,
+    borderRadius: 5,
+    marginHorizontal: 5,
+    backgroundColor: "#f0f0f0",
+  },
+  selectedButton: {
+    backgroundColor: "#007BFF", // Highlight color for the selected button
+  },
+  genderText: {
+    color: "#333",
+    fontSize: 14,
   },
   passwordInput: {
     height: 40,
