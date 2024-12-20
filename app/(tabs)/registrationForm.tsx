@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, View, Button, Alert, TouchableOpacity } from "react-native";
-import { Picker } from '@react-native-picker/picker';
-import DateTimePicker from '@react-native-community/datetimepicker';
 import InputField from '@/components/InputField';
 import PasswordMeter from '@/components/PasswordMeter';
 import DateOfBirth from '@/components/DateOfBirth';

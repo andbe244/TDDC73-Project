@@ -1,101 +1,71 @@
 import React, { useState } from 'react';
-import { View, TextInput, Text, StyleSheet, Alert } from 'react-native';
+import { View, TextInput, Text, StyleSheet } from 'react-native';
 
-// Define the props interface
 interface DateOfBirthProps {
-  label: string;               // Label for the date of birth component
-  day: string;                 // Initial value for the day
-  month: string;               // Initial value for the month
-  year: string;                // Initial value for the year
-  onDateOfBirthChange: (day: string, month: string, year: string) => void; // Function to handle date of birth change
+  label: string;
+  day: string;
+  month: string;
+  year: string;
+  onDateOfBirthChange: (day: string, month: string, year: string) => void;
 }
 
 const DateOfBirth: React.FC<DateOfBirthProps> = ({ label, day, month, year, onDateOfBirthChange }) => {
   const [inputDay, setInputDay] = useState(day);
   const [inputMonth, setInputMonth] = useState(month);
   const [inputYear, setInputYear] = useState(year);
+  const [errors, setErrors] = useState({ day: false, month: false, year: false });
 
-  // Function to validate the entered date of birth
-  const validateDateOfBirth = () => {
-    const dayInt = parseInt(inputDay);
-    const monthInt = parseInt(inputMonth);
-    const yearInt = parseInt(inputYear);
+  const validateDay = (day: string, month: string, year: string) => {
+    const dayInt = parseInt(day);
+    const monthInt = parseInt(month);
+    const yearInt = parseInt(year);
+    const daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
-    // Check if all fields are filled
-    if (!inputDay || !inputMonth || !inputYear) {
-      //Alert.alert('Error', 'Please fill all the fields');
-      return false;
+    if (monthInt === 2 && (yearInt % 4 === 0 && (yearInt % 100 !== 0 || yearInt % 400 === 0))) {
+      daysInMonth[1] = 29;
     }
 
-    // Check if day, month, year are numbers and within reasonable ranges
-    if (isNaN(dayInt) || isNaN(monthInt) || isNaN(yearInt)) {
-      //Alert.alert('Error', 'Please enter valid numbers');
-      return false;
-    }
-
-    if (monthInt < 1 || monthInt > 12) {
-      //Alert.alert('Error', 'Please enter a valid month (1-12)');
-      return false;
-    }
-
-    // Define number of days in each month
-    const daysInMonth = [
-      31, // January
-      28, // February (non-leap year check will be handled later)
-      31, // March
-      30, // April
-      31, // May
-      30, // June
-      31, // July
-      31, // August
-      30, // September
-      31, // October
-      30, // November
-      31, // December
-    ];
-
-    // Check for leap year in February
-    if (monthInt === 2) {
-      const isLeapYear = (yearInt % 4 === 0 && (yearInt % 100 !== 0 || yearInt % 400 === 0));
-      if (isLeapYear) {
-        daysInMonth[1] = 29; // February has 29 days in a leap year
-      }
-    }
-
-    if (dayInt < 1 || dayInt > daysInMonth[monthInt - 1]) {
-      //Alert.alert('Error', `Invalid day for the given month. Please enter a valid day (1-${daysInMonth[monthInt - 1]})`);
-      return false;
-    }
-
-    // Check if the year is reasonable (optional, e.g., between 1900 and current year)
-    const currentYear = new Date().getFullYear();
-    if (yearInt < 1900 || yearInt > currentYear) {
-      //Alert.alert('Error', `Please enter a valid year (1900-${currentYear})`);
-      return false;
-    }
-
-    // If all checks pass, update the parent component with the new date of birth
-    onDateOfBirthChange(inputDay, inputMonth, inputYear);
-    //Alert.alert('Success', `Date of Birth is: ${inputDay}/${inputMonth}/${inputYear}`);
-    return true;
+    return isNaN(dayInt) || dayInt < 1 || dayInt > (daysInMonth[monthInt - 1] || 31);
   };
 
-  // Handle day, month, year changes with input length restrictions
+  const validateMonth = (month: string) => {
+    const monthInt = parseInt(month);
+    return isNaN(monthInt) || monthInt < 1 || monthInt > 12;
+  };
+
+  const validateYear = (year: string) => {
+    const yearInt = parseInt(year);
+    const currentYear = new Date().getFullYear();
+    return isNaN(yearInt) || yearInt < 1900 || yearInt > currentYear;
+  };
+
   const handleDayChange = (text: string) => {
-    const truncatedText = text.substring(0, 2);  // Limit day to 2 digits
+    const truncatedText = text.substring(0, 2);
     setInputDay(truncatedText);
+    setErrors({
+      ...errors,
+      day: validateDay(truncatedText, inputMonth, inputYear),
+    });
     onDateOfBirthChange(truncatedText, inputMonth, inputYear);
   };
 
   const handleMonthChange = (text: string) => {
-    const truncatedText = text.substring(0, 2);  // Limit month to 2 digits
+    const truncatedText = text.substring(0, 2);
     setInputMonth(truncatedText);
+    setErrors({
+      ...errors,
+      month: validateMonth(truncatedText),
+    });
     onDateOfBirthChange(inputDay, truncatedText, inputYear);
   };
 
   const handleYearChange = (text: string) => {
-    const truncatedText = text.substring(0, 4);  // Limit year to 4 digits
+    const truncatedText = text.substring(0, 4);
     setInputYear(truncatedText);
+    setErrors({
+      ...errors,
+      year: validateYear(truncatedText),
+    });
     onDateOfBirthChange(inputDay, inputMonth, truncatedText);
   };
 
@@ -103,32 +73,29 @@ const DateOfBirth: React.FC<DateOfBirthProps> = ({ label, day, month, year, onDa
     <View style={styles.container}>
       {label && <Text style={styles.label}>{label}</Text>}
       <View style={styles.row}>
-        {/* Day Input */}
         <TextInput
-          style={styles.input}
+          style={[styles.input, errors.day && styles.errorInput]}
           value={inputDay}
           onChangeText={handleDayChange}
           placeholder="DD"
           keyboardType="numeric"
-          placeholderTextColor="#888" // Set placeholder text color to gray
+          placeholderTextColor="#888"
         />
-        {/* Month Input */}
         <TextInput
-          style={styles.input}
+          style={[styles.input, errors.month && styles.errorInput]}
           value={inputMonth}
           onChangeText={handleMonthChange}
           placeholder="MM"
           keyboardType="numeric"
-          placeholderTextColor="#888" // Set placeholder text color to gray
+          placeholderTextColor="#888"
         />
-        {/* Year Input */}
         <TextInput
-          style={styles.input}
+          style={[styles.input, errors.year && styles.errorInput]}
           value={inputYear}
           onChangeText={handleYearChange}
           placeholder="YYYY"
           keyboardType="numeric"
-          placeholderTextColor="#888" // Set placeholder text color to gray
+          placeholderTextColor="#888"
         />
       </View>
     </View>
@@ -159,7 +126,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     backgroundColor: '#fff',
     fontSize: 14,
-    //borderRadius: 5,
+  },
+  errorInput: {
+    borderBottomColor: 'red',
+    color: 'red',
   },
 });
 
