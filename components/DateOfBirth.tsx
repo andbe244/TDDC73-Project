@@ -36,7 +36,7 @@ const DateOfBirth: React.FC<DateOfBirthProps> = ({ label, day, month, year, onDa
   const validateYear = (year: string) => {
     const yearInt = parseInt(year);
     const currentYear = new Date().getFullYear();
-    return isNaN(yearInt) || yearInt < 1900 || yearInt > currentYear;
+    return isNaN(yearInt) || yearInt < 1918 || yearInt > 2018;
   };
 
   const handleDayChange = (text: string) => {
